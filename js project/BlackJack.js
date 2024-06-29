@@ -6,7 +6,7 @@
 // @timestamp    1719152205
 // 2024-06-23 22:16:45
 // @license      MIT
-// @homepageURL  https://github.com/sealdice/javascript
+// @homepageURL  https://github.com/ThunLoilu/Thunloilu/tree/main/js%20project
 // ==/UserScript==
 
 const points = [['黑桃A', '黑桃2', '黑桃3', '黑桃4', '黑桃5', '黑桃6', '黑桃7', '黑桃8', '黑桃9', '黑桃10', '黑桃J', '黑桃Q', '黑桃K'],
@@ -309,14 +309,12 @@ cmdstake.solve = (ctx, msg, cmdArgs) => {
                 seal.replyToSender(ctx, msg, `请输入下注金额`);
             }
             else if (val === "check") {
-                let id = String(ctx.player.userId)
-                let name = String(ctx.player.name)
                 let stage = String(seal.vars.strGet(ctx, `$g游戏阶段`)[0])
                 let patis = String(seal.vars.strGet(ctx, `$g参与名单ID`)[0])
                 let stakepls = String(seal.vars.strGet(ctx, `$g押注名单ID`)[0])
                 let patiparts = patis.trim().split("\n")
                 let stakeparts = stakepls.trim().split("\n")
-                if (patiparts.length === stakeparts.length) {
+                if (patiparts.length === stakeparts.length && (stage === "押注" || stage === "")) {
                     seal.vars.strSet(ctx, `$g游戏阶段`, "要牌")
                     seal.vars.strSet(ctx, `$g结算名单ID`, "")
                     let cardan = ""
