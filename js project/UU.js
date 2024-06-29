@@ -9,6 +9,8 @@
 // @homepageURL  https://github.com/sealdice/javascript
 // ==/UserScript==
 
+const ccasprocess = `追逐初步算法已完成，数据表格未新建文件夹，自动寡不敌众不可用`
+
 // 首先检查是否已经存在
 let ext = seal.ext.find('Urge for updates');
 if (!ext) {
@@ -31,8 +33,20 @@ cmdcuigeng.solve = (ctx, msg, cmdArgs) => {
         }
         default: {
             if (val === "") {
-                seal.replyToSender(ctx, msg, `@${msg.sender.nickname} 在更了在更了`)
-            }
+                    seal.replyToSender(ctx, msg, `@${msg.sender.nickname} 在更了在更了\n`)
+                }
+                else if (val.toLowerCase() === "ccas")
+                {
+                    seal.replyToSender(ctx,msg,`CCAS目前进度：${ccasprocess}`)
+                }
+                else if (val === "签到")
+                {
+                    seal.replyToSender(ctx, msg, `可以领低保了，应该结束了`);
+                }
+                else if (val === "21点")
+                {
+                    seal.replyToSender(ctx, msg, `规范完指令就完结啦，筹划新游戏中ing`);
+                }
             return seal.ext.newCmdExecuteResult(true);
         }
     }
