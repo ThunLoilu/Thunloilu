@@ -46,7 +46,7 @@ cmdcuigeng.solve = (ctx, msg, cmdArgs) => {
                 {
                     seal.replyToSender(ctx, msg, `可以领低保了，应该结束了`);
                 }
-                else if (val === "21点")
+                else if (val === "21点" || val === "24点")
                 {
                     seal.replyToSender(ctx, msg, `规范完指令就完结啦，筹划新游戏中ing`);
                 }
