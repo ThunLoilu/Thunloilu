@@ -30,7 +30,6 @@ function calc(calstr) {
     return ans;
 }
 
-//检查输入算式格式和所用数字（感谢AI的大力debug）
 function checkSpecificDigitsNoConsecutive(s, digitFrequencies) {
     // 定义允许的运算符和括号
     const allowedOperators = ['+', '-', '*', '/', '(', ')'];
@@ -217,9 +216,9 @@ cmd24.solve = (ctx, msg, cmdArgs) => {
                         let cnt = 0
                         if (lastpl === id)
                         {
-                            cnt = seal.vars.intGet(ctx, `$g上次答对玩家次数`)[0]
+                            cnt = Number(seal.vars.intGet(ctx, `$g上次答对玩家次数`)[0])
                             bouns += 150 * cnt
-                            if (cnt % 10 === 0)
+                            if (Number.isInteger(cnt / 10))
                             {
                                 bouns *= 20
                             }
