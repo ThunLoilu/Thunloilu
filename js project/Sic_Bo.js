@@ -46,9 +46,8 @@ function price(posi)
     let t = 1 / posi;
     if (t < 2)
     {
-        if (t >= 1.5) t = 1.5;
-        else if (t >= 1.2) t = 1.2;
-        else t = 1.1;
+        if (t >= 1.5) t = 2;
+        else t = 1;
     }
     else
     {
@@ -244,6 +243,13 @@ cmd.solve = (ctx, msg, cmdArgs) => {
                 if (addok) {
                     seal.replyToSender(ctx, msg, `${name}不在游戏中，无法下注哦`);
                 }
+                if (val === "check")
+                {
+                    if (patis.trim().split("\n").length === stakepls.trim().split("\n").length) {
+                        seal.vars.strSet(ctx, `$g游戏阶段`, "结算")
+                        seal.replyToSender(ctx, msg, `所有玩家已完成下注，进入结算阶段`);
+                    }
+                }
                 else if (stage !== "下注") {
                     seal.replyToSender(ctx, msg, `当前不为可下注阶段`);
                 }
@@ -326,7 +332,7 @@ cmd.solve = (ctx, msg, cmdArgs) => {
                         seal.replyToSender(ctx, msg, `你是不是押的太多了？桌上可摆不下这么多筹码哦`);
                     }
                     else {
-                        let rate = price(posi(Number(val2)))
+                        let rate = price(pos[Number(val2)])
                         seal.vars.intSet(ctx, `$m赔率`, rate);
                         seal.vars.intSet(ctx, `$m筹码`, chip);
                         const ch = ["number", Number(val2)];
@@ -338,7 +344,7 @@ cmd.solve = (ctx, msg, cmdArgs) => {
                         seal.replyToSender(ctx, msg, `${name}玩家下注完成，本次下注对应倍率为${rate}倍`);
                     }
                 }
-                if (patis.trim().split("\n").length === stakepls.trim().split().length)
+                if (patis.trim().split("\n").length === stakepls.trim().split("\n").length)
                 {
                     seal.vars.strSet(ctx, `$g游戏阶段`, "结算")
                     seal.replyToSender(ctx, msg, `所有玩家已完成下注，进入结算阶段`);
@@ -350,20 +356,17 @@ cmd.solve = (ctx, msg, cmdArgs) => {
                 let name = String(ctx.player.name)
                 let stage = String(seal.vars.strGet(ctx, `$g游戏阶段`)[0]);
                 let patis = String(seal.vars.strGet(ctx, `$gsic参与名单ID`)[0]);
-                let stakepls = String(seal.vars.strGet(ctx, `$gsic押注名单ID`)[0]);
                 let conpls = String(seal.vars.strGet(ctx, `$gsic结算名单ID`)[0]);
                 let wealth = Number(seal.vars.intGet(ctx, `$m财富`)[0]);
                 let chipon = Number(seal.vars.intGet(ctx, `$m筹码`)[0]);
                 let rate = Number(seal.vars.intGet(ctx, `$m赔率`)[0]);
                 let dice = JSON.parse(String(seal.vars.strGet(ctx, `$gsic骰子`)[0]));
-                let pos = JSON.parse(String(seal.vars.strGet(ctx, `$gsic概率`)[0]));
-                let sub = JSON.parse(String(seal.vars.strGet(ctx, `$gsic前缀和`)[0]));
                 let sumnum = Number(seal.vars.intGet(ctx, `$gsic总点数`)[0])
                 let ch = JSON.parse(String(seal.vars.strGet(ctx, `$m目标点数`)[0]));
                 let patiparts = patis.trim().split("\n")
-                let stakeparts = stakepls.trim().split("\n")
                 let conparts = conpls.trim().split("\n")
                 let addok = 1;
+                let val2 = cmdArgs.getArgN(2);
                 for (let i = 0; i < patiparts.length; i++) {
                     if (id === patiparts[i]) {
                         addok = 0;
@@ -385,6 +388,15 @@ cmd.solve = (ctx, msg, cmdArgs) => {
                 }
                 if (addok) {
                     seal.replyToSender(ctx, msg, `${name}不在游戏中，无法下注哦`);
+                }
+                else if (val2 === "check")
+                {
+                    if (patis.trim().split("\n").length === conpls.trim().split("\n").length) {
+                        seal.vars.strSet(ctx, `$g游戏阶段`, "")
+                        seal.vars.strSet(ctx, `$gsic押注名单ID`, "")
+                        seal.vars.strSet(ctx, `$gsic结算名单ID`, "")
+                        seal.replyToSender(ctx, msg, `所有玩家已完成结算，可以进行下一场游戏了`);
+                    }
                 }
                 else if (!conok)
                 {
@@ -468,7 +480,8 @@ cmd.solve = (ctx, msg, cmdArgs) => {
                         }
                     }
                     conpls += id + "\n"
-                    if (patis.trim().split("\n").length === conpls.trim().split().length) {
+                    seal.vars.strSet(ctx, `$gsic结算名单ID`, conpls);
+                    if (patis.trim().split("\n").length === conpls.trim().split("\n").length) {
                         seal.vars.strSet(ctx, `$g游戏阶段`, "")
                         seal.vars.strSet(ctx, `$gsic押注名单ID`, "")
                         seal.vars.strSet(ctx, `$gsic结算名单ID`, "")
