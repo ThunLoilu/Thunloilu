@@ -32,12 +32,9 @@ function posibility(initialPositions, diceSides, rolls) {
 
 function subsum(obj) {
     const arr = [obj[0]];
-    let str = ""
     for (let i = 1; i < obj.length; i++) {
         arr.push(arr[i - 1] + obj[i]);
-        str += arr[i] + " "
     }
-    console.log(str)
     return arr;
 }
 
@@ -77,6 +74,7 @@ cmd.help = `.sicbo join ::加入游戏
 .sicbo stake range l r chip ::下注内容为骰点结果在[l,r]中，下注chip刀乐
 .sicbo stake single/even chip ::下注内容为骰点结果为奇数/偶数，下注chip刀乐
 .sicbo stake num chip ::下注内容为骰点结果为num，下注chip刀乐
+（特别提醒：本游戏下注不支持all）
 
 下注后赔率由下注者的获胜概率实时计算，以上指令均有中文版（可@开发者获取）`;
 cmd.solve = (ctx, msg, cmdArgs) => {
@@ -181,7 +179,7 @@ cmd.solve = (ctx, msg, cmdArgs) => {
                     }
                     else if (partdice.length === 2 && !isNaN(partdice[0]) && !isNaN(partdice[1]))
                     {
-                        if (partdice[0] > 1e3 || partdice[1] > 1e4)
+                        if (partdice[0] > 10 || partdice[1] > 100)
                         {
                             seal.replyToSender(ctx, msg, `小安拿不出这些骰子来骰哦，少骰一点好吗？`);
                         }
@@ -206,7 +204,7 @@ cmd.solve = (ctx, msg, cmdArgs) => {
                             seal.vars.strSet(ctx, `$gsic骰子`, JSON.stringify(dice));
                             seal.vars.intSet(ctx, `$gsic总点数`, sumdice);
                             seal.vars.strSet(ctx, `$g游戏阶段`, "下注")
-                            seal.replyToSender(ctx, msg, `骰点完成啦`);
+                            seal.replyToSender(ctx, msg, `骰点完成啦，可以下注了`);
                         }
                     }
                     else
