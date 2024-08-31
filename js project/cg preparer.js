@@ -79,7 +79,7 @@ cmdcgsave.solve = (ctx, msg, cmdArgs) => {
         default: {
             let findcg = seal.vars.strGet(ctx, "$mcg" + val)[0];
             if (findcg) {
-                seal.replyToSender(ctx, msg, findcg);
+                seal.replyToSender(ctx, msg,`<${val}>:\n` + findcg);
             } else {
                 seal.replyToSender(ctx, msg, "未找到CG：" + val);
             }
