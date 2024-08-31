@@ -9,8 +9,6 @@
 // @homepageURL  https://github.com/ThunLoilu/Thunloilu/tree/main/js%20project
 // ==/UserScript==
 
-const ccasprocess = `追逐初步算法已完成，数据表格未新建文件夹，自动寡不敌众不可用`
-
 // 首先检查是否已经存在
 let ext = seal.ext.find('Urge for updates');
 if (!ext) {
@@ -40,15 +38,35 @@ cmdcuigeng.solve = (ctx, msg, cmdArgs) => {
                 }
                 else if (val.toLowerCase() === "ccas")
                 {
-                    seal.replyToSender(ctx,msg,`CCAS目前进度：${ccasprocess}`)
+                    seal.replyToSender(ctx, msg, `该插件更新已基本结束，有bug可反馈至作者邮箱：2865813065@qq.com`)
                 }
                 else if (val === "签到")
                 {
-                    seal.replyToSender(ctx, msg, `可以领低保了，应该结束了`);
+                    seal.replyToSender(ctx, msg, `该插件更新已基本结束，有bug可反馈至作者邮箱：2865813065@qq.com`);
                 }
                 else if (val === "21点" || val === "24点")
                 {
-                    seal.replyToSender(ctx, msg, `规范完指令就完结啦，筹划新游戏中ing`);
+                    seal.replyToSender(ctx, msg, `该插件更新已基本结束，有bug可反馈至作者邮箱：2865813065@qq.com`);
+                }
+                else if (val === "sicbo" || val === "骰宝")
+                {
+                    seal.replyToSender(ctx, msg, `该插件更新已基本结束，有bug可反馈至作者邮箱：2865813065@qq.com`);
+                }
+                else if (val === "CCASusertool" || val === "ccasusertool" || val === "CCAS用户工具")
+                {
+                    seal.replyToSender(ctx, msg, `该插件组已完成随机NPC，有其他需求或bug可联系作者邮箱：2865813065@qq.com`);
+                }
+                else if (val === "修仙之路")
+                {
+                    seal.replyToSender(ctx, msg, `已经新建文件了，别急`);
+                }
+                else if (val === "underground")
+                {
+                    seal.replyToSender(ctx, msg, `已经新建文件了，别急`);
+                }
+                else if (val === "texasholdem")
+                {
+                    seal.replyToSender(ctx, msg, `还没新建文件，等卫星吧`);
                 }
             }
             return seal.ext.newCmdExecuteResult(true);
